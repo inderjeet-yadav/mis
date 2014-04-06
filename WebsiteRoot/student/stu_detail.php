@@ -122,6 +122,7 @@
         //set_id_of_branch();
         var tr=document.getElementById('course');
         var branch=document.getElementById('branch_id').value;
+        var year=document.getElementById('entrance_age').value;
         var xmlhttp;
         if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -138,7 +139,7 @@
                 tr.innerHTML=xmlhttp.responseText;
             }
         }
-        xmlhttp.open("GET","AJAX_courses_by_branch.php?branch="+branch,true);
+        xmlhttp.open("GET","AJAX_courses_by_branch.php?branch="+branch+"&year="+year,true);
         xmlhttp.send();
         tr.innerHTML = "<td><i class=\"loading\"></i></td>";
     }
@@ -154,6 +155,12 @@
     {
         var course_id=document.getElementById('course_id').value;
         document.getElementById('id_of_course').value=course_id;
+    }
+
+    function date_changed()
+    {
+        document.getElementById('depts').value="select_dept";
+        document.getElementById('branch').visibility="hidden";
     }
 
 </script>
@@ -177,7 +184,7 @@
         	Date of Admission
         </td>
     	<td>
-			<input type="date" name="entrance_age" value="<?php echo date("Y-m-d",time()+(19800));?>" required="required" >
+			<input type="date" name="entrance_age" id="entrance_age" value="<?php echo date("Y-m-d",time()+(19800));?>" required="required" onchange="date_changed()">
         </td>
         
     </tr>
@@ -334,7 +341,7 @@
     	<td>
   	      	<select name="department" id="depts" onchange="options_of_branches()">
             	<?php
-                    echo '<option disabled="disabled" selected>Select Department</option>';
+                    echo '<option disabled="disabled" selected value="select_dept">Select Department</option>';
 					$qry=mysql_query("select id,name from departments where type='academic'");
 					while($row=mysql_fetch_row($qry))
 					{
@@ -349,21 +356,13 @@
             Branch
         </td>
         <td id="branch">
-            <!--select name="branch">
-                <option disabled="disabled" selected>Select Branches</option>
-            </select-->
         </td>
         <td>
             Course
         </td>
         <td id="course">
-            <!--select name="course">
-                <option disabled="disabled" selected>Select Course</option>
-            </select-->
         </td>
     </tr>
-    <!--tr >
-    </tr!-->
     <tr>
     	<th width='50%' colspan=2>
         	Present Address

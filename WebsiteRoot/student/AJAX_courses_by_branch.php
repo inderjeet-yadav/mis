@@ -4,10 +4,9 @@
 	require_once("connectDB.php");
 	
 	$branch=$_GET['branch'];
-	//echo $branch;
-	//die();
-	//$stuquery=mysql_query("select courses.id,courses.name from courses,course_branch where courses.id=course_branch.course_id AND course_branch.branch_id='".$branch."'");
-	$stuquery=mysql_query("select id,name from courses where id=(select course_id from course_branch where branch_id='".$branch."')");
+	$year=$_GET['year'];
+	$year = substr($year,0,4);
+	$stuquery=mysql_query("SELECT id,name FROM courses,course_branch WHERE id=course_id AND branch_id='".$branch."' AND YEAR= '".$year."'");
 	if(mysql_num_rows($stuquery)==0)
 	{
 		echo '<td>No Courses in the Department</td>';

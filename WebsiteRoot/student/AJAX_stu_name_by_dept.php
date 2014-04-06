@@ -4,6 +4,8 @@
 	require_once("connectDB.php");
 	
 	$dept=$_GET['dept'];
+	echo $dept;
+	die();
 	echo '<th>Student name</th>';
 	$stuquery=mysql_query("select id,first_name,middle_name from user_details NATURAL JOIN users where dept_id='".$dept."' and auth_id='stu' ");
 	if(mysql_num_rows($stuquery)==0)
